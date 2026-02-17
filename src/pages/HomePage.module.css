@@ -1,0 +1,12 @@
+.zoomRoot {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  width: 100vw;
+  height: 100vh;
+  min-width: 100%;
+  min-height: 100%;
+  display: none;
+  background: #1a1a1a;
+  overflow: visible;
+}

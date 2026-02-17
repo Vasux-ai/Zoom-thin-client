@@ -1,0 +1,58 @@
+.form {
+  background: rgba(28, 30, 38, 0.85);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  padding: 2rem;
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.35);
+}
+
+.title { margin: 0 0 0.25rem; font-size: 1.5rem; font-weight: 600; color: #fff; text-align: center; }
+.subtitle { margin: 0 0 1.5rem; font-size: 0.875rem; color: rgba(255, 255, 255, 0.6); text-align: center; }
+
+.joiningSpinner {
+  width: 40px; height: 40px; margin: 0 auto 1rem;
+  border: 3px solid rgba(255, 255, 255, 0.2);
+  border-top-color: #2b6aff;
+  border-radius: 50%;
+  animation: joinSpin 0.8s linear infinite;
+}
+@keyframes joinSpin { to { transform: rotate(360deg); } }
+
+.label { display: block; margin-bottom: 0.35rem; font-size: 0.875rem; font-weight: 500; color: rgba(255, 255, 255, 0.9); }
+.optional { font-weight: 400; color: rgba(255, 255, 255, 0.5); font-size: 0.8rem; }
+
+.input {
+  width: 100%; box-sizing: border-box;
+  padding: 0.75rem 1rem; margin-bottom: 1rem; font-size: 1rem; color: #fff;
+  background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 10px; outline: none; transition: border-color 0.2s, box-shadow 0.2s;
+}
+.input::placeholder { color: rgba(255, 255, 255, 0.4); }
+.input:hover:not(:disabled) { border-color: rgba(255, 255, 255, 0.2); }
+.input:focus { border-color: #2b6aff; box-shadow: 0 0 0 3px rgba(43, 106, 255, 0.25); }
+.input:disabled { opacity: 0.7; cursor: not-allowed; }
+
+.error {
+  padding: 0.75rem 1rem; margin-bottom: 1rem; font-size: 0.875rem; color: #ff6b6b;
+  background: rgba(255, 107, 107, 0.12); border: 1px solid rgba(255, 107, 107, 0.3); border-radius: 10px;
+}
+
+.button {
+  width: 100%; padding: 0.9rem 1.25rem; font-size: 1rem; font-weight: 600; color: #fff;
+  background: #2b6aff; border: none; border-radius: 10px; cursor: pointer; transition: background 0.2s, transform 0.1s;
+}
+.button:hover:not(:disabled) { background: #1a5ae6; }
+.button:active:not(:disabled) { transform: scale(0.99); }
+.button:disabled { opacity: 0.8; cursor: not-allowed; }
+
+.actions { display: flex; gap: 0.75rem; margin-top: 0.25rem; }
+.actions .button { flex: 1; }
+
+.buttonSecondary {
+  padding: 0.9rem 1.25rem; font-size: 1rem; font-weight: 600; color: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 10px;
+  cursor: pointer; transition: background 0.2s, border-color 0.2s;
+}
+.buttonSecondary:hover:not(:disabled) { background: rgba(255, 255, 255, 0.15); border-color: rgba(255, 255, 255, 0.3); }
+.buttonSecondary:disabled { opacity: 0.7; cursor: not-allowed; }

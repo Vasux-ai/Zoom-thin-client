@@ -1,0 +1,108 @@
+:root {
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.92);
+  background-color: #0f1116;
+  color-scheme: dark;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+/* Zoom SDK meeting UI: keep our globals from breaking layout */
+#zmmtg-root,
+#zmmtg-root * {
+  box-sizing: content-box;
+}
+#zmmtg-root {
+  font-family: inherit;
+  line-height: normal;
+}
+
+/* Zoom "Computer Audio" / "Join Audio by Computer" dialog */
+#zmmtg-root [class*="dialog"],
+#zmmtg-root [class*="modal"],
+#zmmtg-root [class*="join-audio"] {
+  max-width: 380px !important;
+  width: auto !important;
+}
+#zmmtg-root div[role="dialog"],
+#zmmtg-root [class*="dialog"][class*="show"],
+#zmmtg-root [class*="modal"][class*="show"] {
+  max-width: 380px !important;
+  max-height: 280px !important;
+  width: auto !important;
+  border-radius: 12px !important;
+}
+
+/* Voip icon left of "Computer Audio" text + gap */
+#zmmtg-root div[role="dialog"]:has(.tab-bar-node__icon--voip) > *:first-child,
+#zmmtg-root [class*="dialog"]:has(.tab-bar-node__icon--voip) > *:first-child {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  gap: 0.75rem !important;
+}
+#zmmtg-root .tab-bar-node__icon--voip,
+#zmmtg-root .tab-bar-node__icon.tab-bar-node__icon--voip {
+  order: -1 !important;
+  flex-shrink: 0 !important;
+  margin-right: 0.75rem !important;
+}
+
+/* Reduce height of Join Audio dialog */
+#zmmtg-root .join-dialog {
+  max-height: 220px !important;
+  min-height: auto !important;
+  padding: 0.75rem 1rem !important;
+  overflow: visible !important;
+}
+#zmmtg-root .join-dialog__tabs,
+#zmmtg-root .zmu-tabs.join-dialog__tabs {
+  min-height: auto !important;
+  padding: 0 !important;
+}
+#zmmtg-root .zmu-tabs__tab-container,
+#zmmtg-root .zmu-tabs__tab-container--top {
+  padding: 0.5rem 0 !important;
+  min-height: auto !important;
+}
+#zmmtg-root .zmu-tabs__tabs-list,
+#zmmtg-root .zmu-tabs__tab-bar {
+  min-height: auto !important;
+  padding: 0.25rem 0 !important;
+}
+#zmmtg-root .tab-bar-node {
+  padding: 0.25rem 0 !important;
+  min-height: auto !important;
+}
+#zmmtg-root .zmu-tabs__tabpanel,
+#zmmtg-root .join-audio-by-voip {
+  padding: 0.35rem 0 0.5rem !important;
+  min-height: auto !important;
+  margin-top: -0.15rem !important;
+}
+#zmmtg-root .join-audio-by-voip__join-btn {
+  padding: 0.5rem 1rem !important;
+  font-size: 0.9rem !important;
+  min-height: auto !important;
+}
