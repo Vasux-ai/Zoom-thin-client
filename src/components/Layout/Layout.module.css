@@ -29,21 +29,9 @@
   border-radius: 16px;
   box-shadow: 0 24px 48px rgba(0, 0, 0, 0.35);
   box-sizing: border-box;
-  height: 360px;
+  height: 440px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   overflow: hidden;
-}
-
-@media (max-width: 480px) {
-  .layout {
-    align-items: center;
-  }
-
-  .content {
-    margin: 0.75rem;
-    height: auto;
-    min-height: 0;
-  }
 }

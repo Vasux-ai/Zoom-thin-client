@@ -7,7 +7,6 @@ const JOIN_PARAM = 'join'
 const MEETING_PARAM = 'meetingNumber'
 const PWD_PARAM = 'pwd'
 const USERNAME_PARAM = 'username'
-const EMAIL_PARAM = 'email'
 
 function getParam(params, ...keys) {
   for (const key of keys) {
@@ -43,24 +42,19 @@ function getMeetingFromParams(params) {
 }
 
 function getInitialStateFromUrl() {
-  if (typeof window === 'undefined') return { step: 1, meetingInput: '', passcode: '', displayName: '', email: '' }
+  if (typeof window === 'undefined') return { step: 1, meetingInput: '', passcode: '', displayName: '' }
   const params = new URLSearchParams(window.location.search)
   const meeting = getMeetingFromParams(params)
   const userName = getParam(params, USERNAME_PARAM, 'name', 'user')
-  const userEmail = getParam(params, EMAIL_PARAM, 'email')
-  if (meeting && userName) {
-    return { step: 1, meetingInput: '', passcode: '', displayName: userName, email: userEmail }
-  }
   if (meeting) {
     return {
       step: 2,
       meetingInput: meeting.meetingInput,
       passcode: meeting.password || '',
-      displayName: getParam(params, USERNAME_PARAM, 'name', 'user'),
-      email: userEmail,
+      displayName: userName,
     }
   }
-  return { step: 1, meetingInput: '', passcode: '', displayName: userName, email: userEmail }
+  return { step: 1, meetingInput: '', passcode: '', displayName: userName }
 }
 
 export function JoinForm({ onJoin, loading, error }) {
@@ -68,7 +62,6 @@ export function JoinForm({ onJoin, loading, error }) {
   const [meetingInput, setMeetingInput] = useState(() => getInitialStateFromUrl().meetingInput)
   const [passcode, setPasscode] = useState(() => getInitialStateFromUrl().passcode)
   const [displayName, setDisplayName] = useState(() => getInitialStateFromUrl().displayName)
-  const [email, setEmail] = useState(() => getInitialStateFromUrl().email)
   const [fieldError, setFieldError] = useState(null)
   const [bypassForm, setBypassForm] = useState(false)
   const autoJoinStartedRef = useRef(false)
@@ -77,7 +70,6 @@ export function JoinForm({ onJoin, loading, error }) {
     const params = new URLSearchParams(window.location.search)
     const meeting = getMeetingFromParams(params)
     const userName = getParam(params, USERNAME_PARAM, 'name', 'user')
-    const userEmail = getParam(params, EMAIL_PARAM, 'email')
 
     if (meeting && userName && !autoJoinStartedRef.current) {
       autoJoinStartedRef.current = true
@@ -86,7 +78,6 @@ export function JoinForm({ onJoin, loading, error }) {
         meetingNumber: meeting.meetingNumber,
         password: meeting.password,
         userName,
-        userEmail,
       })
       return
     }
@@ -95,7 +86,6 @@ export function JoinForm({ onJoin, loading, error }) {
       setPasscode(meeting.password || '')
       setStep(2)
       if (userName) setDisplayName(userName)
-      if (userEmail) setEmail(userEmail)
     }
   }, [onJoin])
 
@@ -120,14 +110,9 @@ export function JoinForm({ onJoin, loading, error }) {
       e.preventDefault()
       setFieldError(null)
       const dName = displayName.trim()
-      const uEmail = email.trim()
 
       if (!dName) {
         setFieldError('Please enter your display name.')
-        return
-      }
-      if (!uEmail) {
-        setFieldError('Please enter your email.')
         return
       }
 
@@ -140,10 +125,9 @@ export function JoinForm({ onJoin, loading, error }) {
         meetingNumber: parsed.meetingNumber,
         password: parsed.password,
         userName: dName,
-        userEmail: uEmail,
       })
     },
-    [meetingInput, passcode, displayName, email, onJoin]
+    [meetingInput, passcode, displayName, onJoin]
   )
 
   const handleBack = useCallback(() => {
@@ -201,18 +185,6 @@ export function JoinForm({ onJoin, loading, error }) {
         onChange={(e) => setDisplayName(e.target.value)}
         disabled={loading}
         autoComplete="name"
-        required
-      />
-      <label className={styles.label} htmlFor="email">Email</label>
-      <input
-        id="email"
-        type="email"
-        className={styles.input}
-        placeholder="you@example.com"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        disabled={loading}
-        autoComplete="email"
         required
       />
       {displayError && <div className={styles.error} role="alert">{displayError}</div>}
