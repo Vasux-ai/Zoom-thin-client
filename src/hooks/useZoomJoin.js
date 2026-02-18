@@ -106,7 +106,7 @@ export function useZoomJoin(options = {}) {
       setLoading(true)
       restoreAppBackground()
       const rootEl = document.getElementById(ZOOM_ROOT_ID)
-      if (rootEl) rootEl.style.display = 'none'
+      if (rootEl) rootEl.style.display = 'block'
       try {
         const { signature, sdkKey } = await getSignature(meetingNumber, 0)
         const ZoomMtg = await ensureSdkReady()

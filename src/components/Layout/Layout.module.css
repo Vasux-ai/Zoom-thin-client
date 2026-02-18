@@ -38,7 +38,7 @@
 
 @media (max-width: 480px) {
   .layout {
-    align-items: flex-start;
+    align-items: center;
   }
 
   .content {
