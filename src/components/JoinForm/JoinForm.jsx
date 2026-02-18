@@ -119,6 +119,18 @@ export function JoinForm({ onJoin, loading, error }) {
     (e) => {
       e.preventDefault()
       setFieldError(null)
+      const dName = displayName.trim()
+      const uEmail = email.trim()
+
+      if (!dName) {
+        setFieldError('Please enter your display name.')
+        return
+      }
+      if (!uEmail) {
+        setFieldError('Please enter your email.')
+        return
+      }
+
       const parsed = parseMeetingInput(meetingInput, passcode)
       if (!parsed) {
         setFieldError('Invalid meeting info. Please go back and enter again.')
@@ -127,8 +139,8 @@ export function JoinForm({ onJoin, loading, error }) {
       onJoin({
         meetingNumber: parsed.meetingNumber,
         password: parsed.password,
-        userName: displayName.trim() || DEFAULT_DISPLAY_NAME,
-        userEmail: email.trim(),
+        userName: dName,
+        userEmail: uEmail,
       })
     },
     [meetingInput, passcode, displayName, email, onJoin]
@@ -141,13 +153,13 @@ export function JoinForm({ onJoin, loading, error }) {
 
   const displayError = fieldError || error
 
-  if (bypassForm) {
+  if (loading || bypassForm) {
     return (
       <div className={styles.form}>
         <h1 className={styles.title}>Joining meeting…</h1>
         <p className={styles.subtitle}>Please wait</p>
-        {displayError && <div className={styles.error} role="alert">{displayError}</div>}
         <div className={styles.joiningSpinner} aria-hidden="true" />
+        {displayError && <div className={styles.error} role="alert">{displayError}</div>}
       </div>
     )
   }
@@ -202,7 +214,7 @@ export function JoinForm({ onJoin, loading, error }) {
         autoComplete="name"
         required
       />
-      <label className={styles.label} htmlFor="email">Email <span className={styles.optional}>(required for webinars)</span></label>
+      <label className={styles.label} htmlFor="email">Email</label>
       <input
         id="email"
         type="email"
@@ -212,6 +224,7 @@ export function JoinForm({ onJoin, loading, error }) {
         onChange={(e) => setEmail(e.target.value)}
         disabled={loading}
         autoComplete="email"
+        required
       />
       {displayError && <div className={styles.error} role="alert">{displayError}</div>}
       <div className={styles.actions}>
