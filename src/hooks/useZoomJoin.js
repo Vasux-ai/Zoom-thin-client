@@ -54,7 +54,7 @@ async function loadZoomLocale(ZoomMtg, localeUrl) {
     const locale = await res.json()
     ZoomMtg.i18n.load(locale)
     ZoomMtg.i18n.reload(locale)
-  } catch {}
+  } catch { }
 }
 
 const APP_BACKGROUND = '#0f1116'
@@ -128,11 +128,8 @@ export function useZoomJoin(options = {}) {
             userEmail: userEmail || '',
             success: () => {
               if (rootEl) rootEl.style.display = 'block'
-              const delayMs = 1400
-              setTimeout(() => {
-                setJoined(true)
-                resolve()
-              }, delayMs)
+              setJoined(true)
+              resolve()
             },
             error: (err) => reject(err || new Error('Zoom join failed')),
           })

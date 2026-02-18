@@ -153,17 +153,6 @@ export function JoinForm({ onJoin, loading, error }) {
 
   const displayError = fieldError || error
 
-  if (loading || bypassForm) {
-    return (
-      <div className={styles.form}>
-        <h1 className={styles.title}>Joining meeting…</h1>
-        <p className={styles.subtitle}>Please wait</p>
-        <div className={styles.joiningSpinner} aria-hidden="true" />
-        {displayError && <div className={styles.error} role="alert">{displayError}</div>}
-      </div>
-    )
-  }
-
   if (step === 1) {
     return (
       <form onSubmit={handleStep1Submit} className={styles.form} noValidate>
