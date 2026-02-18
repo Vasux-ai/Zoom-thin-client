@@ -57,13 +57,25 @@ async function loadZoomLocale(ZoomMtg, localeUrl) {
   } catch {}
 }
 
+const APP_BACKGROUND = '#0f1116'
+
+function restoreAppBackground() {
+  if (typeof document === 'undefined') return
+  document.documentElement.style.backgroundColor = APP_BACKGROUND
+  document.body.style.backgroundColor = APP_BACKGROUND
+  const root = document.getElementById('root')
+  if (root) root.style.backgroundColor = APP_BACKGROUND
+}
+
 async function ensureZoomSdkLoaded() {
   exposeGlobalsForZoomSdk()
   await loadCss(zoomSdk.cssUrl)
   await loadCss(zoomSdk.cssUrl2)
+  restoreAppBackground()
   await loadScript(zoomSdk.scriptUrl)
   await loadScript(zoomSdk.scriptUrl2)
   await loadScript(zoomSdk.scriptUrl3)
+  restoreAppBackground()
   const ZoomMtg = window.ZoomMtg
   if (!ZoomMtg) throw new Error('Zoom Meeting SDK failed to load')
   return ZoomMtg
@@ -92,6 +104,7 @@ export function useZoomJoin(options = {}) {
     async ({ meetingNumber, password, userName, userEmail }) => {
       setError(null)
       setLoading(true)
+      restoreAppBackground()
       const rootEl = document.getElementById(ZOOM_ROOT_ID)
       if (rootEl) rootEl.style.display = 'none'
       try {

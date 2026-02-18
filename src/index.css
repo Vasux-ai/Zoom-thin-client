@@ -17,14 +17,19 @@
   box-sizing: border-box;
 }
 
+/* Stable dark background: override Bootstrap when Zoom SDK loads after Join click */
+html,
 body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
+  background-color: #0f1116 !important;
+  color: rgba(255, 255, 255, 0.92);
 }
 
 #root {
   min-height: 100vh;
+  background-color: #0f1116 !important;
 }
 
 /* Zoom SDK meeting UI: keep our globals from breaking layout */
