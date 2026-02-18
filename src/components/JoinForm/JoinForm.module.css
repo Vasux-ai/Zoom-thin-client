@@ -177,3 +177,27 @@
   opacity: 0.7;
   cursor: not-allowed;
 }
+
+@media (max-width: 480px) {
+  .form {
+    padding: 1.25rem 1rem;
+  }
+
+  .title {
+    font-size: 1.25rem;
+  }
+
+  .input {
+    font-size: 0.95rem;
+  }
+
+  .button,
+  .buttonSecondary {
+    padding: 0.8rem 1rem;
+    font-size: 0.95rem;
+  }
+
+  .actions {
+    flex-direction: column;
+  }
+}

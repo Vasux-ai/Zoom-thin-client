@@ -35,3 +35,15 @@
   justify-content: flex-start;
   overflow: hidden;
 }
+
+@media (max-width: 480px) {
+  .layout {
+    align-items: flex-start;
+  }
+
+  .content {
+    margin: 0.75rem;
+    height: auto;
+    min-height: 0;
+  }
+}
