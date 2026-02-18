@@ -18,7 +18,7 @@ export function HomePage() {
 
   return (
     <>
-      {!joined && (
+      {!joined && !loading && (
         <Layout>
           <JoinForm onJoin={handleJoin} loading={loading} error={error} />
         </Layout>
