@@ -129,6 +129,10 @@ export function useZoomJoin(options = {}) {
             success: () => {
               if (rootEl) rootEl.style.display = 'block'
               setJoined(true)
+              // Mark that user has joined a meeting (for detecting return from meeting)
+              if (typeof sessionStorage !== 'undefined') {
+                sessionStorage.setItem('zoom_meeting_joined', 'true')
+              }
               resolve()
             },
             error: (err) => reject(err || new Error('ERROR_ZOOM_JOIN_FAILED')),
