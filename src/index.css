@@ -44,6 +44,7 @@ body {
 #zmmtg-root * {
   box-sizing: content-box;
 }
+
 #zmmtg-root {
   font-family: inherit;
   line-height: normal;
@@ -58,6 +59,7 @@ body {
   max-width: 380px !important;
   width: auto !important;
 }
+
 #zmmtg-root div[role="dialog"],
 #zmmtg-root [class*="dialog"][class*="show"],
 #zmmtg-root [class*="modal"][class*="show"] {
@@ -68,14 +70,15 @@ body {
 }
 
 /* Voip icon left of "Computer Audio" text + gap */
-#zmmtg-root div[role="dialog"]:has(.tab-bar-node__icon--voip) > *:first-child,
-#zmmtg-root [class*="dialog"]:has(.tab-bar-node__icon--voip) > *:first-child {
+#zmmtg-root div[role="dialog"]:has(.tab-bar-node__icon--voip)>*:first-child,
+#zmmtg-root [class*="dialog"]:has(.tab-bar-node__icon--voip)>*:first-child {
   display: flex !important;
   flex-direction: row !important;
   align-items: center !important;
   justify-content: flex-start !important;
   gap: 0.75rem !important;
 }
+
 #zmmtg-root .tab-bar-node__icon--voip,
 #zmmtg-root .tab-bar-node__icon.tab-bar-node__icon--voip {
   order: -1 !important;
@@ -90,33 +93,64 @@ body {
   padding: 0.75rem 1rem !important;
   overflow: visible !important;
 }
+
 #zmmtg-root .join-dialog__tabs,
 #zmmtg-root .zmu-tabs.join-dialog__tabs {
   min-height: auto !important;
   padding: 0 !important;
 }
+
 #zmmtg-root .zmu-tabs__tab-container,
 #zmmtg-root .zmu-tabs__tab-container--top {
   padding: 0.5rem 0 !important;
   min-height: auto !important;
 }
+
 #zmmtg-root .zmu-tabs__tabs-list,
 #zmmtg-root .zmu-tabs__tab-bar {
   min-height: auto !important;
   padding: 0.25rem 0 !important;
 }
+
 #zmmtg-root .tab-bar-node {
   padding: 0.25rem 0 !important;
   min-height: auto !important;
 }
+
 #zmmtg-root .zmu-tabs__tabpanel,
 #zmmtg-root .join-audio-by-voip {
   padding: 0.35rem 0 0.5rem !important;
   min-height: auto !important;
   margin-top: -0.15rem !important;
 }
+
 #zmmtg-root .join-audio-by-voip__join-btn {
   padding: 0.5rem 1rem !important;
   font-size: 0.9rem !important;
   min-height: auto !important;
+}
+
+/* Specific overrides for Join Audio Action Sheet */
+#zmmtg-root .join-audio-actionsheet {
+  position: fixed !important;
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  bottom: auto !important;
+  margin: 0 !important;
+  max-height: 90vh !important;
+  width: 90vw !important;
+  max-width: 380px !important;
+  z-index: 1000 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+}
+
+#zmmtg-root .join-audio-actionsheet .zm-action-sheet__actions {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 8px !important;
+  padding: 16px !important;
+  overflow-y: auto !important;
 }
