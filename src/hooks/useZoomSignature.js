@@ -11,8 +11,9 @@ export function useZoomSignature() {
     try {
       return await postSignature(meetingNumber, role)
     } catch (err) {
-      setError(err.message || 'Failed to get signature')
-      throw err
+      const msg = err.message || 'ERROR_SIGNATURE_FAILED'
+      setError(msg)
+      throw new Error(msg)
     } finally {
       setLoading(false)
     }

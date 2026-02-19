@@ -77,7 +77,7 @@ async function ensureZoomSdkLoaded() {
   await loadScript(zoomSdk.scriptUrl3)
   restoreAppBackground()
   const ZoomMtg = window.ZoomMtg
-  if (!ZoomMtg) throw new Error('Zoom Meeting SDK failed to load')
+  if (!ZoomMtg) throw new Error('ERROR_ZOOM_SDK_LOAD')
   return ZoomMtg
 }
 
@@ -115,7 +115,7 @@ export function useZoomJoin(options = {}) {
             leaveUrl: LEAVE_URL,
             disablePreview: true,
             success: () => resolve(),
-            error: (err) => reject(err || new Error('Zoom init failed')),
+            error: (err) => reject(err || new Error('ERROR_ZOOM_INIT_FAILED')),
           })
         })
         await new Promise((resolve, reject) => {
@@ -124,18 +124,18 @@ export function useZoomJoin(options = {}) {
             sdkKey,
             meetingNumber,
             passWord: password || '',
-            userName: userName || 'Guest Participant',
+            userName: userName || 'Guest Participant', // Zoom SDK uses this; app UI uses translated placeholder
             userEmail: userEmail || '',
             success: () => {
               if (rootEl) rootEl.style.display = 'block'
               setJoined(true)
               resolve()
             },
-            error: (err) => reject(err || new Error('Zoom join failed')),
+            error: (err) => reject(err || new Error('ERROR_ZOOM_JOIN_FAILED')),
           })
         })
       } catch (err) {
-        setError(err.message || 'Failed to join meeting')
+        setError(err.message || 'ERROR_JOIN_FAILED')
         if (rootEl) rootEl.style.display = 'none'
         throw err
       } finally {

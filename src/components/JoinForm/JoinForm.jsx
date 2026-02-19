@@ -1,8 +1,8 @@
 import { useState, useCallback, useEffect, useRef } from 'react'
 import { parseMeetingInput, parseZoomUrl } from '../../utils/parseZoomUrl'
+import { useLanguage } from '../../i18n/useLanguage'
 import styles from './JoinForm.module.css'
 
-const DEFAULT_DISPLAY_NAME = 'Guest Participant'
 const JOIN_PARAM = 'join'
 const MEETING_PARAM = 'meetingNumber'
 const PWD_PARAM = 'pwd'
@@ -63,7 +63,15 @@ function getInitialStateFromUrl() {
 }
 
 export function JoinForm({ onJoin, loading, error }) {
+  const { t, lang } = useLanguage()
   const [step, setStep] = useState(() => getInitialStateFromUrl().step)
+  useEffect(() => {
+    document.title = step === 1 ? t('titleJoin') : t('titleYourName')
+    const html = document.documentElement
+    if (lang === 'hi') html.setAttribute('lang', 'hi')
+    else if (lang === 'mr') html.setAttribute('lang', 'mr')
+    else html.setAttribute('lang', 'en')
+  }, [lang, step, t])
   const [meetingInput, setMeetingInput] = useState(() => getInitialStateFromUrl().meetingInput)
   const [passcode, setPasscode] = useState(() => getInitialStateFromUrl().passcode)
   const [displayName, setDisplayName] = useState(() => getInitialStateFromUrl().displayName)
@@ -108,12 +116,12 @@ export function JoinForm({ onJoin, loading, error }) {
       setFieldError(null)
       const parsed = parseMeetingInput(meetingInput, passcode)
       if (!parsed) {
-        setFieldError('Please enter a valid meeting number or Zoom URL.')
+        setFieldError(t('errorInvalidMeeting'))
         return
       }
       setStep(2)
     },
-    [meetingInput, passcode]
+    [meetingInput, passcode, t]
   )
 
   const handleStep2Submit = useCallback(
@@ -123,13 +131,13 @@ export function JoinForm({ onJoin, loading, error }) {
       const dName = displayName.trim()
 
       if (!dName) {
-        setFieldError('Please enter your display name.')
+        setFieldError(t('errorEnterDisplayName'))
         return
       }
 
       const parsed = parseMeetingInput(meetingInput, passcode)
       if (!parsed) {
-        setFieldError('Invalid meeting info. Please go back and enter again.')
+        setFieldError(t('errorInvalidMeetingGoBack'))
         return
       }
       onJoin({
@@ -138,7 +146,7 @@ export function JoinForm({ onJoin, loading, error }) {
         userName: dName,
       })
     },
-    [meetingInput, passcode, displayName, onJoin]
+    [meetingInput, passcode, displayName, onJoin, t]
   )
 
   const handleBack = useCallback(() => {
@@ -146,52 +154,53 @@ export function JoinForm({ onJoin, loading, error }) {
     setStep(1)
   }, [])
 
-  const displayError = fieldError || error
+  const rawError = fieldError || error
+  const displayError = rawError ? t(rawError) : null
 
   if (step === 1) {
     return (
       <form onSubmit={handleStep1Submit} className={styles.form} noValidate>
-        <h1 className={styles.title}>Join Zoom Meeting</h1>
-        <p className={styles.subtitle}>Enter meeting details</p>
-        <label className={styles.label} htmlFor="meeting-input">Meeting number or URL</label>
+        <h1 className={styles.title}>{t('titleJoin')}</h1>
+        <p className={styles.subtitle}>{t('subtitleMeetingDetails')}</p>
+        <label className={styles.label} htmlFor="meeting-input">{t('labelMeetingNumber')}</label>
         <input
           id="meeting-input"
           type="text"
           className={styles.input}
-          placeholder="e.g. 74577211931 or https://zoom.us/j/74577211931"
+          placeholder={t('placeholderMeetingExample')}
           value={meetingInput}
           onChange={(e) => setMeetingInput(e.target.value)}
           disabled={loading}
           autoComplete="off"
           required
         />
-        <label className={styles.label} htmlFor="passcode">Passcode <span className={styles.optional}>(if required)</span></label>
+        <label className={styles.label} htmlFor="passcode">{t('labelPasscode')} <span className={styles.optional}>{t('optionalIfRequired')}</span></label>
         <input
           id="passcode"
           type="text"
           className={styles.input}
-          placeholder="Meeting passcode"
+          placeholder={t('placeholderPasscode')}
           value={passcode}
           onChange={(e) => setPasscode(e.target.value)}
           disabled={loading}
           autoComplete="off"
         />
         {displayError && <div className={styles.error} role="alert">{displayError}</div>}
-        <button type="submit" className={styles.button} disabled={loading}>Continue</button>
+        <button type="submit" className={styles.button} disabled={loading}>{t('buttonContinue')}</button>
       </form>
     )
   }
 
   return (
     <form onSubmit={handleStep2Submit} className={styles.form} noValidate>
-      <h1 className={styles.title}>Your name</h1>
-      <p className={styles.subtitle}>Meeting: {meetingInfo?.meetingNumber}{meetingInfo?.password ? ' • Passcode entered' : ''}</p>
-      <label className={styles.label} htmlFor="display-name">Display name</label>
+      <h1 className={styles.title}>{t('titleYourName')}</h1>
+      <p className={styles.subtitle}>{t('subtitleMeeting')} {meetingInfo?.meetingNumber}{meetingInfo?.password ? ` • ${t('passcodeEntered')}` : ''}</p>
+      <label className={styles.label} htmlFor="display-name">{t('labelDisplayName')}</label>
       <input
         id="display-name"
         type="text"
         className={styles.input}
-        placeholder={DEFAULT_DISPLAY_NAME}
+        placeholder={t('placeholderGuestName')}
         value={displayName}
         onChange={(e) => setDisplayName(e.target.value)}
         disabled={loading}
@@ -200,8 +209,8 @@ export function JoinForm({ onJoin, loading, error }) {
       />
       {displayError && <div className={styles.error} role="alert">{displayError}</div>}
       <div className={styles.actions}>
-        <button type="button" className={styles.buttonSecondary} onClick={handleBack} disabled={loading}>Back</button>
-        <button type="submit" className={styles.button} disabled={loading}>{loading ? 'Joining…' : 'Join Meeting'}</button>
+        <button type="button" className={styles.buttonSecondary} onClick={handleBack} disabled={loading}>{t('buttonBack')}</button>
+        <button type="submit" className={styles.button} disabled={loading}>{loading ? t('joining') : t('buttonJoinMeeting')}</button>
       </div>
     </form>
   )
