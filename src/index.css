@@ -2,14 +2,17 @@
   font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
   line-height: 1.5;
   font-weight: 400;
-  color: rgba(255, 255, 255, 0.92);
-  background-color: #0f1116;
-  color-scheme: dark;
+  color: #374151;
+  background-color: #e5e7eb;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  font-size: 16px;
+  font-size: clamp(15px, 4vw, 16px);
+  --safe-top: env(safe-area-inset-top, 0);
+  --safe-bottom: env(safe-area-inset-bottom, 0);
+  --safe-left: env(safe-area-inset-left, 0);
+  --safe-right: env(safe-area-inset-right, 0);
 }
 
 *,
@@ -18,19 +21,22 @@
   box-sizing: border-box;
 }
 
-/* Stable dark background: override Bootstrap when Zoom SDK loads after Join click */
+/* Page background: override when Zoom SDK loads after Join click */
 html,
 body {
   margin: 0;
-  min-width: 320px;
+  min-width: 280px;
   min-height: 100vh;
-  background-color: #0f1116 !important;
-  color: rgba(255, 255, 255, 0.92);
+  min-height: 100dvh;
+  background-color: #e5e7eb !important;
+  color: #374151;
+  -webkit-tap-highlight-color: transparent;
 }
 
 #root {
   min-height: 100vh;
-  background-color: #0f1116 !important;
+  min-height: 100dvh;
+  background-color: #e5e7eb !important;
 }
 
 /* Zoom SDK meeting UI: keep our globals from breaking layout */
@@ -41,6 +47,8 @@ body {
 #zmmtg-root {
   font-family: inherit;
   line-height: normal;
+  padding: var(--safe-top) var(--safe-right) var(--safe-bottom) var(--safe-left);
+  box-sizing: border-box;
 }
 
 /* Zoom "Computer Audio" / "Join Audio by Computer" dialog */

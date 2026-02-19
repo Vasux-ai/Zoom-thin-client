@@ -57,7 +57,7 @@ async function loadZoomLocale(ZoomMtg, localeUrl) {
   } catch { }
 }
 
-const APP_BACKGROUND = '#0f1116'
+const APP_BACKGROUND = '#e5e7eb'
 
 function restoreAppBackground() {
   if (typeof document === 'undefined') return

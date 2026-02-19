@@ -46,7 +46,8 @@ function getInitialStateFromUrl() {
   const params = new URLSearchParams(window.location.search)
   const meeting = getMeetingFromParams(params)
   const userName = getParam(params, USERNAME_PARAM, 'name', 'user')
-  if (meeting) {
+  const hasPasscode = meeting && (meeting.password || '').trim() !== ''
+  if (meeting && hasPasscode) {
     return {
       step: 2,
       meetingInput: meeting.meetingInput,
@@ -54,7 +55,11 @@ function getInitialStateFromUrl() {
       displayName: userName,
     }
   }
-  return { step: 1, meetingInput: '', passcode: '', displayName: userName }
+  if (meeting) {
+    return { step: 1, meetingInput: meeting.meetingInput, passcode: meeting.password || '', displayName: userName }
+  }
+  const passcodeOnly = getParam(params, PWD_PARAM, 'passcode', 'password')
+  return { step: 1, meetingInput: '', passcode: passcodeOnly, displayName: userName }
 }
 
 export function JoinForm({ onJoin, loading, error }) {
@@ -70,8 +75,9 @@ export function JoinForm({ onJoin, loading, error }) {
     const params = new URLSearchParams(window.location.search)
     const meeting = getMeetingFromParams(params)
     const userName = getParam(params, USERNAME_PARAM, 'name', 'user')
+    const hasPasscode = meeting && (meeting.password || '').trim() !== ''
 
-    if (meeting && userName && !autoJoinStartedRef.current) {
+    if (meeting && hasPasscode && userName && !autoJoinStartedRef.current) {
       autoJoinStartedRef.current = true
       setBypassForm(true)
       onJoin({
@@ -81,10 +87,15 @@ export function JoinForm({ onJoin, loading, error }) {
       })
       return
     }
-    if (meeting) {
+    if (meeting && hasPasscode) {
       setMeetingInput(meeting.meetingInput)
       setPasscode(meeting.password || '')
       setStep(2)
+      if (userName) setDisplayName(userName)
+    } else if (meeting) {
+      setMeetingInput(meeting.meetingInput)
+      setPasscode(meeting.password || '')
+      setStep(1)
       if (userName) setDisplayName(userName)
     }
   }, [onJoin])

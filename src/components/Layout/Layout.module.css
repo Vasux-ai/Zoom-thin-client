@@ -1,19 +1,22 @@
 .layout {
   min-height: 100vh;
+  min-height: 100dvh;
   display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
+  padding: max(12px, env(safe-area-inset-top)) max(16px, env(safe-area-inset-right)) max(12px, env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-left));
 }
 
 .blob {
-  position: absolute;
+  position: fixed;
   inset: 0;
   background:
-    radial-gradient(ellipse 80% 50% at 50% -20%, rgba(43, 106, 255, 0.25), transparent),
-    radial-gradient(ellipse 60% 40% at 80% 50%, rgba(43, 106, 255, 0.12), transparent),
-    radial-gradient(ellipse 50% 30% at 20% 80%, rgba(43, 106, 255, 0.1), transparent);
+    radial-gradient(ellipse 80% 50% at 50% -20%, rgba(242, 104, 43, 0.15), transparent),
+    radial-gradient(ellipse 60% 40% at 80% 50%, rgba(242, 104, 43, 0.08), transparent),
+    radial-gradient(ellipse 50% 30% at 20% 80%, rgba(0, 0, 0, 0.03), transparent);
   pointer-events: none;
 }
 
@@ -22,16 +25,31 @@
   z-index: 1;
   width: 100%;
   max-width: 420px;
-  margin: 0 auto;
-  background: rgba(28, 30, 38, 0.85);
+  min-height: 0;
+  margin: auto;
+  background: #ffffff;
   backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(0, 0, 0, 0.08);
   border-radius: 16px;
-  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.35);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(242, 104, 43, 0.06);
   box-sizing: border-box;
-  height: 440px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   overflow: hidden;
+  max-height: min(90dvh, 560px);
+}
+
+@media (max-width: 480px) {
+  .content {
+    max-height: 85dvh;
+    border-radius: 12px;
+  }
+}
+
+@media (max-height: 500px) {
+  .content {
+    max-height: 95dvh;
+  }
 }
