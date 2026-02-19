@@ -154,6 +154,15 @@ export function JoinForm({ onJoin, loading, error }) {
     setStep(1)
   }, [])
 
+  if (loading) {
+    return (
+      <div className={styles.loadingOverlay}>
+        <div className={styles.joiningSpinner} aria-hidden="true" />
+        <div className={styles.joinMeeting}>{t('joiningMeeting')}</div>
+      </div>
+    )
+  }
+
   const rawError = fieldError || error
   const displayError = rawError ? t(rawError) : null
 

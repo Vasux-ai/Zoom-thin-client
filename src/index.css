@@ -45,11 +45,23 @@ body {
   box-sizing: content-box;
 }
 
+/* Override SDK loading text font size */
+#zmmtg-root .join-meeting,
+.join-meeting {
+  font-size: 12px !important;
+}
+
 #zmmtg-root {
   font-family: inherit;
   line-height: normal;
   padding: var(--safe-top) var(--safe-right) var(--safe-bottom) var(--safe-left);
   box-sizing: border-box;
+}
+
+/* Position the Leave Meeting button at the right center (minimalist) */
+#zmmtg-root .leave-meeting-options__btn--danger {
+  margin-right: 240px !important;
+  width: 140px !important;
 }
 
 /* Zoom "Computer Audio" / "Join Audio by Computer" dialog */
@@ -164,7 +176,7 @@ body {
 }
 
 /* Make sure the nested flex container doesn't break the distribution */
-#zmmtg-root .footer__inner>div[style path*="display: flex"],
+#zmmtg-root .footer__inner>div[style*="display: flex"],
 #zmmtg-root .footer__inner>div[style*="display: flex"] {
   display: flex !important;
   gap: inherit !important;

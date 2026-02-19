@@ -48,13 +48,21 @@ function loadCss(href) {
 
 async function loadZoomLocale(ZoomMtg, localeUrl) {
   if (!localeUrl || !ZoomMtg.i18n) return
+
+  // Extract language code from URL if possible (e.g. /locales/hi.json -> hi)
+  const langMatch = localeUrl.match(/\/locales\/([a-z]{2})\.json/)
+  const langCode = langMatch ? langMatch[1] : 'en'
+  const zoomCode = langCode === 'hi' ? 'hi-IN' : langCode === 'mr' ? 'mr-IN' : 'en-US'
+
   try {
     const res = await fetch(localeUrl)
     if (!res.ok) return
-    const locale = await res.json()
-    ZoomMtg.i18n.load(locale)
-    ZoomMtg.i18n.reload(locale)
-  } catch { }
+    const localeData = await res.json()
+    ZoomMtg.i18n.load(localeData, zoomCode)
+    ZoomMtg.i18n.reload(zoomCode)
+  } catch (error) {
+    console.error('Failed to load Zoom locale:', error)
+  }
 }
 
 const APP_BACKGROUND = '#e5e7eb'
@@ -124,7 +132,7 @@ export function useZoomJoin(options = {}) {
             sdkKey,
             meetingNumber,
             passWord: password || '',
-            userName: userName || 'Guest Participant', // Zoom SDK uses this; app UI uses translated placeholder
+            userName: userName || '',
             userEmail: userEmail || '',
             success: () => {
               if (rootEl) rootEl.style.display = 'block'

@@ -6,9 +6,9 @@ import { getLangFromUrl } from '../i18n/translations'
 import styles from './HomePage.module.css'
 
 const ZOOM_LOCALE_MAP = {
-  en: 'en-US',
-  hi: 'en-US',
-  mr: 'en-US',
+  en: '/locales/en.json',
+  hi: '/locales/hi.json',
+  mr: '/locales/mr.json',
 }
 
 // Check if URL has meeting parameters
@@ -20,8 +20,8 @@ function hasMeetingParams() {
 
 export function HomePage() {
   const appLang = getLangFromUrl()
-  const zoomLocale = ZOOM_LOCALE_MAP[appLang] || 'en-US'
-  const { join, loading, error, joined } = useZoomJoin({ localeUrl: zoomLocale })
+  const localeUrl = ZOOM_LOCALE_MAP[appLang] || ZOOM_LOCALE_MAP.en
+  const { join, loading, error, joined } = useZoomJoin({ localeUrl })
   const [returnedFromMeeting, setReturnedFromMeeting] = useState(false)
 
   // Check if user is returning from a meeting
@@ -29,7 +29,7 @@ export function HomePage() {
     if (typeof sessionStorage !== 'undefined') {
       const wasInMeeting = sessionStorage.getItem('zoom_meeting_joined') === 'true'
       const hasParams = hasMeetingParams()
-      
+
       // If user was in a meeting and there are no meeting params, they're returning
       if (wasInMeeting && !hasParams) {
         setReturnedFromMeeting(true)
@@ -45,7 +45,7 @@ export function HomePage() {
 
   const handleJoin = useCallback(
     (params) => {
-      join(params).catch(() => {})
+      join(params).catch(() => { })
     },
     [join]
   )
