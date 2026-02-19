@@ -154,3 +154,32 @@ body {
   padding: 16px !important;
   overflow-y: auto !important;
 }
+
+/* Footer Button Spacing */
+#zmmtg-root .footer__inner {
+  display: flex !important;
+  justify-content: space-evenly !important;
+  align-items: center !important;
+  padding: 0 8px !important;
+}
+
+/* Make sure the nested flex container doesn't break the distribution */
+#zmmtg-root .footer__inner>div[style path*="display: flex"],
+#zmmtg-root .footer__inner>div[style*="display: flex"] {
+  display: flex !important;
+  gap: inherit !important;
+  flex: 1 1 auto !important;
+  justify-content: space-evenly !important;
+}
+
+#zmmtg-root .footer__btns-container,
+#zmmtg-root .footer__leave-btn-container {
+  flex: 1 1 auto !important;
+  display: flex !important;
+  justify-content: center !important;
+}
+
+#zmmtg-root .footer-button__wrapper,
+#zmmtg-root .footer-button-base__button {
+  margin: 0 !important;
+}
