@@ -60,8 +60,15 @@ body {
 
 /* Position the Leave Meeting button at the right center (minimalist) */
 #zmmtg-root .leave-meeting-options__btn--danger {
-  margin-right: 240px !important;
+  margin-right: 300px !important;
   width: 140px !important;
+}
+
+/* Remove background from leave options container */
+#zmmtg-root .leave-meeting-options {
+  background: none !important;
+  box-shadow: none !important;
+  border: none !important;
 }
 
 /* Zoom "Computer Audio" / "Join Audio by Computer" dialog */

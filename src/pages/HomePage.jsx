@@ -50,8 +50,8 @@ export function HomePage() {
     [join]
   )
 
-  // Hide form if user returned from meeting or is currently in a meeting
-  const showForm = !joined && !returnedFromMeeting
+  // Hide form only if currently in a meeting
+  const showForm = !joined
 
   return (
     <>
